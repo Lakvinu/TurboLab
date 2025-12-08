@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turbo Lab — Premium Car Detailing Specialists</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<header class="nav-wrap">
+  <nav class="nav container">
+    <a class="brand" href="#hero">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="Turbo Lab logo">
+      <span class="visually-hidden">Turbo Lab</span>
+    </a>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#features">Features</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO SECTION -->
+<section id="hero" class="hero">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <h1>Premium Mobile Detailing</h1>
+      <p class="lead">Showroom shine delivered to your doorstep. Luxury, precision, and care for every vehicle.</p>
+      <div class="hero-ctas">
+        <a class="btn primary" href="#contact">Book Now</a>
+        <a class="btn ghost" href="#services">View Services</a>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="badge">Mobile • On-Demand • Premium</div>
+      <div class="card-body">
+        <h4>Turbo Detail</h4>
+        <p>Premium inside–out refresh featuring foam pre-wash, 2‑bucket hand wash, wheel & arch deep clean, streak‑free glass, and a protective sealant.
+        Finished with a thorough interior vacuum and panel wipe for a crisp, like‑new feel.</p>
+        <div class="card-pricing">
+          <small>from</small>
+          <span class="price">$110</span>
+        </div>
+        <a href="#contact" class="btn small">Request</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="section light">
+  <div class="container">
+    <h2 class="section-title center xl">Our Portfolio</h2>
+    <div class="gallery-split">
+      <div class="featured-image">
+        <img src="https://res.cloudinary.com/dmaxvaojt/image/upload/f_auto,q_auto:best,dpr_auto/v1765108823/Copy_of_IMG20251207183324_und0tx.jpg" alt="Featured detailing image" class="featured-img">
+        <button class="featured-btn prev" aria-label="Previous image">&#10094;</button>
+        <button class="featured-btn next" aria-label="Next image">&#10095;</button>
+      </div>
+      <div class="thumbs-panel">
+        <button class="thumbs-btn up" aria-label="Scroll up">&#9650;</button>
+        <div class="thumbs-track">
+          <img class="thumb active" src="https://res.cloudinary.com/dmaxvaojt/image/upload/f_auto,q_auto:best,dpr_auto/v1765108823/Copy_of_IMG20251207183324_und0tx.jpg" alt="Detailing 1">
+          <img class="thumb" src="https://res.cloudinary.com/dmaxvaojt/image/upload/f_auto,q_auto:best,dpr_auto/v1765108823/Copy_of_IMG_1308_wb8zgi.heic" alt="Detailing 2">
+          <img class="thumb" src="https://res.cloudinary.com/dmaxvaojt/image/upload/f_auto,q_auto:best,dpr_auto/v1765108822/Copy_of_IMG_1310_trgcbd.heic" alt="Detailing 3">
+          <img class="thumb" src="https://res.cloudinary.com/dmaxvaojt/image/upload/f_auto,q_auto:best,dpr_auto/v1765108824/Copy_of_IMG_5831_cd0lmm.heic" alt="Detailing 4">
+          <img class="thumb" src="https://res.cloudinary.com/dmaxvaojt/image/upload/f_auto,q_auto:best,dpr_auto/v1765110632/Copy_of_IMG_5828_ipdryw.heic" alt="Detailing 5">
+        </div>
+        <button class="thumbs-btn down" aria-label="Scroll down">&#9660;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox" aria-hidden="true">
+    <div class="lightbox-backdrop"></div>
+    <img class="lightbox-image" alt="Expanded gallery image">
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+  </div>
+</section>
+<!-- SERVICES -->
+<section id="services" class="section light">
+  <div class="container">
+    <h2 class="section-title center xl">Our Detailing Packages</h2>
+    <div class="carousel">
+      <button class="carousel-btn prev" aria-label="Previous">&#10094;</button>
+      <div class="carousel-track">
+        <div class="service-card popular">
+          <span class="most-popular-badge badge-top-right">Most Popular</span>
+          <h3>Turbo Detail</h3>
+          <div class="card-pricing">
+            <span class="price-main">From $110</span>
+          </div>
+          <ul class="premium-list" style="margin: 16px 0 0 0; padding-left: 0; list-style: none;">
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Foam cannon pre-wash, followed by 2-bucket hand wash</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Full Wheel & Arches Deep Clean</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Windows & mirrors cleaned streak-free</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Sealant Dressing for protection and gloss</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Full Interior vacuum</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> All interior panels spray & wipe</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Interior deoderised</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <span class="discount-badge badge-top-right">-20%</span>
+          <h3>Full Interior Detail</h3>
+          <div class="card-pricing">
+            <span class="price-old">From $225</span>
+            <span class="price-new">Now $180</span>
+          </div>
+          <ul class="premium-list" style="margin: 16px 0 0 0; padding-left: 0; list-style: none;">
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Full interior vacuum</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Floor mats shampooed and washed</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Seats, carpets & boot deep-shampooed, steamed & extracted</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Leather seats cleaned & conditioned (if applicable)</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> All interior surfaces cleaned & rejuvenated — dash, centre console, trims & plastics</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Air vents, seat rails & sun visors cleaned & rejuvenated</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Stain removal on fabrics & upholstery</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Foot pedals cleaned</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Interior windows & mirrors cleaned (inside & out)</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Premium deodorising treatment</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <span class="discount-badge badge-top-right">-20%</span>
+          <h3>Full Exterior Detail</h3>
+          <div class="card-pricing">
+            <span class="price-old">From $200</span>
+            <span class="price-new">Now $160</span>
+          </div>
+          <ul class="premium-list" style="margin: 16px 0 0 0; padding-left: 0; list-style: none;">
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Foam cannon pre-wash, followed by 2-bucket hand wash</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Bug splatter and road tar removal</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Wheels, tyres and arches deep cleaned</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Door and boot jambs pressure cleaned and dried</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Clay bar treatment for full paint decotamination</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Iron decontamination on paintwork + wheels</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Sealant applied for enhanced protection and shine</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Exterior trim rejuvination and UV-protected</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Tyres restored and professionally dressed</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Windows & mirrors cleaned streak-free</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Engine Bay refresh</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <span class="discount-badge badge-top-right">-20%</span>
+          <h3>Signature Turbo Detail</h3>
+          <div class="card-pricing">
+            <span class="price-old">From $400</span>
+            <span class="price-new">Now $320</span>
+          </div>
+          <ul class="premium-list" style="margin: 16px 0 0 0; padding-left: 0; list-style: none;">
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Full Interior Detail</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Full Exterior Detail</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> 6-12 month Long-term sealant application Complimentary</li>
+            <li><span class="tick-circle"><span class="tick">&#10003;</span></span> Included Stain Spot Cleaner if Applicable</li>
+          </ul>
+        </div>
+      </div>
+      <button class="carousel-btn next" aria-label="Next">&#10095;</button>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="section dark">
+  <div class="container">
+    <h2 class="section-title">Why Choose Turbo Lab</h2>
+    <div class="cards feature-cards">
+      <article class="card">
+        <h3>Fully Mobile</h3>
+        <p>We come to your location fully equipped. Save time while receiving premium care for your vehicle.</p>
+      </article>
+      <article class="card">
+        <h3>Premium Products</h3>
+        <p>We use only high-end automotive products and coatings, ensuring maximum shine, protection, and longevity.</p>
+      </article>
+      <article class="card">
+        <h3>Expert Technicians</h3>
+        <p>Our team is highly trained to deliver meticulous attention to every detail, guaranteeing consistent results.</p>
+      </article>
+      <article class="card">
+        <h3>Fast & Efficient</h3>
+        <p>Express detailing services for busy clients — fast, precise, and professional without compromising quality.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="section light">
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section light">
+  <div class="container">
+    <h2 class="section-title">Contact Us</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, msg in messages %}
+          <div class="flash {{ category }}">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="contact-grid">
+      <form class="contact-form" method="POST" novalidate>
+        <label><input name="name" placeholder="Your Name" required></label>
+        <label><input name="email" placeholder="Email" type="email" required></label>
+        <label><textarea name="message" rows="5" placeholder="Your Message" required></textarea></label>
+        <button class="btn primary" type="submit">Send Message</button>
+      </form>
+
+      <aside class="contact-info">
+        <h3>We Come to You</h3>
+        <p>Serving greater Melbourne — fully mobile and appointment-based for your convenience.</p>
+        <ul class="meta">
+          <li><strong>Phone:</strong> 0435 651 236</li>
+          <li><strong>Email:</strong> hello@turbolab.example</li>
+          <li><strong>Hours:</strong> Mon–Sat 8am–6pm</li>
+        </ul>
+        <div class="social">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="Facebook">FB</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <small>© 2025 Turbo Lab — Premium Mobile Detailing</small>
+  </div>
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
