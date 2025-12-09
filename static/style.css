@@ -89,7 +89,17 @@
 /* Split Gallery: featured left, vertical thumbnails right */
 .gallery-split{ display:grid; grid-template-columns: 1fr 280px; gap: 20px; align-items: start; }
 .featured-image{ position: relative; display:flex; align-items:center; justify-content:center; background: var(--section-light-bg); border-radius: 14px }
-.featured-img{ width:100%; height: 520px; object-fit: contain; background: var(--section-light-bg); border-radius: 14px; border: none; box-shadow: none; cursor: zoom-in }
+.featured-img{ width:100%; height: var(--portfolio-item-height, 420px); object-fit: cover; background: transparent; border-radius: 18px; border: none; box-shadow: none; cursor: zoom-in; margin: 0; display: block; clip-path: inset(0 round 18px) }
+/* Portfolio carousel */
+/* Full-bleed: break out of container for edge-to-edge width */
+.portfolio-carousel{ position: relative; width: 100vw; margin-left: calc(50% - 50vw); overflow: hidden; padding: 12px 0 }
+.portfolio-track{ display: flex; transition: transform 0.5s cubic-bezier(.77,0,.18,1); will-change: transform; gap: var(--portfolio-gap, 20px); padding: 0 var(--portfolio-peek, 12px) }
+/* Each item width is set dynamically via JS to fit as many per row as possible */
+.portfolio-item{ flex: 0 0 var(--portfolio-item-width, 100%); display: flex; align-items: center; justify-content: center; padding: 8px; border-radius: 18px; overflow: hidden; background: transparent; box-shadow: 0 8px 26px rgba(4,42,74,0.10); border: 1px solid rgba(4,42,74,0.06) }
+.portfolio-btn{ position: absolute; top: 50%; transform: translateY(-50%); background: var(--navy-700); color: #fff; border: none; border-radius: 50%; width: 44px; height: 44px; font-size: 2rem; cursor: pointer; z-index: 2; box-shadow: 0 4px 16px rgba(4,42,74,0.12); transition: background 0.2s }
+.portfolio-btn.prev{ left: 12px }
+.portfolio-btn.next{ right: 12px }
+.portfolio-btn:hover{ background: var(--orange); color: var(--navy-900) }
 /* Mobile overlay buttons for horizontal slider */
 .featured-btn{ position:absolute; top:50%; transform:translateY(-50%); background: rgba(11,59,90,0.85); color:#fff; border:none; border-radius:50%; width:42px; height:42px; font-size:2rem; cursor:pointer; z-index:3; box-shadow:0 4px 16px rgba(4,42,74,0.18) }
 .featured-btn.prev{ left: 10px }
@@ -97,20 +107,15 @@
 .featured-btn:hover{ background: var(--orange); color: var(--navy-900) }
 /* Slightly lower the featured image on desktop to sit between arrows */
 @media (min-width: 901px){
-  .featured-img{ margin-top: 40px }
-}
-.thumbs-panel{ position: relative; display:flex; flex-direction: column; gap: 12px }
-.thumbs-track{ overflow-y: auto; max-height: 520px; padding-right: 6px; display: flex; flex-direction: column; gap: 12px }
-.thumb{ width:100%; height: 95px; object-fit: cover; border-radius: 10px; box-shadow: 0 6px 20px rgba(4,42,74,0.08); cursor: pointer; opacity: 0.9; border: 2px solid transparent; }
-.thumb:hover{ opacity: 1 }
-.thumb.active{ border-color: var(--orange); box-shadow: 0 8px 24px rgba(255,122,24,0.16) }
+  .featured-img{ width: 100%; height: var(--portfolio-item-height, 440px); background: transparent; margin: 0 }
 .thumbs-btn{ background: var(--navy-700); color:#fff; border:none; border-radius: 10px; height: 40px; cursor:pointer; box-shadow:0 4px 16px rgba(4,42,74,0.12); }
 .thumbs-btn:hover{ background: var(--orange); color: var(--navy-900) }
+}
 
 @media (max-width: 900px){
   .gallery-split{ grid-template-columns: 1fr; }
   .featured-image{ width: 100%; min-height: 50vh; }
-  .featured-img{ width: 100%; height: auto; max-height: 80vh; background: var(--section-light-bg) }
+  .featured-img{ width: 100%; height: var(--portfolio-item-height, 360px); background: transparent; margin: 0 }
   .thumbs-panel{ display: none }
   .thumbs-track{ max-height: none; flex-direction: row; overflow-x: auto; overflow-y: hidden; gap: 10px; scroll-snap-type: x mandatory }
   .thumb{ width: 36vw; max-width: 220px; height: 110px; scroll-snap-align: start }
@@ -118,7 +123,7 @@
 }
 
 @media (max-width: 600px){
-  .featured-img{ width: 100%; height: auto; max-height: 72vh; }
+  .featured-img{ width: 100%; height: var(--portfolio-item-height, 300px); margin: 0 }
   .thumb{ width: 42vw; height: 100px }
   .thumbs-btn{ width: 100%; }
 }
@@ -239,6 +244,9 @@
   --glass:    rgba(255,255,255,0.04);
   --success:  #28C76F;
   --section-light-bg: #ffffff; /* light section background color */
+  --portfolio-gap: 20px;
+  --portfolio-item-height: 420px;
+  --portfolio-peek: 64px;
 }
 
 /* Reset & base */
@@ -248,6 +256,13 @@ body{margin:0;font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,"Helve
 
 /* Utility container */
 .container{max-width:1100px;margin:0 auto;padding:0 20px}
+/* Allow wider services container on large screens so 4 cards can fit */
+@media (min-width: 1400px){
+  #services .container{ max-width: 1400px }
+}
+@media (min-width: 1600px){
+  #services .container{ max-width: 1500px }
+}
 
 /* Section backgrounds: allow alternating light sections on the navy page */
 .section{padding:64px 0}
