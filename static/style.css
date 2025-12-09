@@ -1,3 +1,82 @@
+/* WHY CHOOSE US (Original grid restore to remove navy seam) */
+.why-section{ position: relative; padding: 0; min-height: 100vh; }
+.why-inner{ position: relative; display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; align-items: stretch }
+.features-overlay{ position: absolute; inset: 0; display: grid; place-items: end center; pointer-events: none; z-index: 4; padding-top: 0; padding-bottom: 40px }
+.features-overlay.top .features-card{ transform: none; }
+.features-overlay .features-card{ pointer-events: auto; margin: 0; max-width: min(1100px, 92vw); }
+@media (max-width: 1100px){
+  .features-overlay{ position: static; display: block; padding-top: 16px }
+  .features-overlay .features-card{ margin: 16px auto; max-width: 95vw }
+}
+/* (removed redundant mobile note) */
+/* Left: light background with clipped image overlay to prevent seam */
+.why-left{ position: relative; z-index: 0; background: #f2f4f7; min-height: 100vh }
+.why-left::after{ content:""; position:absolute; inset:0; background-image: url('https://res.cloudinary.com/dmaxvaojt/image/upload/f_auto,q_auto:best,dpr_auto/v1765112933/Copy_of_IMG_5828_bdbofd.heic'); background-size: cover; background-position: center; clip-path: polygon(0 0, 70% 0, 50% 100%, 0 100%); z-index: 1 }
+.why-right{ position: relative; z-index: 2; display: flex; align-items: flex-start; background: #f2f4f7; min-height: 100vh }
+.why-content{ position: relative; padding: 40px 20px }
+.why-header{ margin-top: 25vh }
+@media (max-width: 1100px){
+  .why-header{ margin-top: 0 }
+}
+.why-title{ margin: 0 0 12px; color: #0B3B5A; font-family: 'Anton','Inter',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; font-size: 2.6rem; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 400; text-align: left }
+.why-accents{ margin-top: 6px; display: flex; flex-direction: column; align-items: flex-start }
+.why-accents .accent-line{ display: block; width: 120px; height: 4px; background: #F26F0F; margin: 4px 0; transform: skewX(-12deg); transform-origin: left center }
+.why-lead{ margin: 12px 0 18px; color: #49566a; font-size: 1.05rem; line-height: 1.6 }
+@media (max-width: 1100px){
+  .why-inner{ grid-template-columns: 1fr; min-height: auto }
+  .why-left{ min-height: 40vh }
+  .why-right{ align-items: flex-start; min-height: auto }
+}
+/* Mobile: hide image, show summary + features */
+@media (max-width: 900px){
+  .why-inner{ grid-template-columns: 1fr; }
+  .why-left{ display: none; }
+  .why-left::after{ content: none; }
+  .why-right{ min-height: auto; }
+  .features-overlay{ position: static; display: block; padding-top: 12px }
+  .features-overlay .features-card{ margin: 12px auto; max-width: 95vw }
+}
+
+/* Features card */
+.features-card {
+  margin: 24px 0 20px;
+  background: #ffffff;
+  border: 1.5px solid rgba(4,42,74,0.10);
+  box-shadow: 0 14px 40px rgba(4,42,74,0.12);
+  border-radius: 18px;
+  padding: 36px 32px;
+  max-width: 1000px;
+  z-index: 2;
+  position: relative;
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px 28px;
+}
+.feature-item h4 {
+  margin: 0 0 8px;
+  font-family: 'Anton','Inter',sans-serif;
+  color: #0B3B5A;
+  letter-spacing: 0.6px;
+  font-weight: 400;
+  font-size: 1.25rem;
+}
+.feature-item p {
+  margin: 0;
+  color: #49566a;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+@media (max-width: 900px) {
+  .features-card { max-width: 95vw; padding: 28px 24px; margin: 20px 0 24px; }
+  .features-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+}
+@media (max-width: 600px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .feature-item h4 { font-size: 1.2rem; }
+  .feature-item p { font-size: 1.02rem; }
+}
 /* featured-btn controls removed */
 .card-pricing {
   margin: 10px 0 0 0;
@@ -266,9 +345,10 @@ body{margin:0;font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,"Helve
 
 /* Section backgrounds: allow alternating light sections on the navy page */
 .section{padding:64px 0}
-.section .section-title{font-size:1.35rem;margin:0 0 18px;color:var(--text);font-family:'Oswald','Inter',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;font-weight:700;text-transform:uppercase}
-.section .section-title.center{ text-align:center }
-.section .section-title.xl{ font-size:2.8rem; letter-spacing:1px }
+.section .section-title{font-size:1.35rem;margin:0 0 18px;color:var(--text);font-family:'Anton','Inter',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;font-weight:400;letter-spacing:0.5px;text-transform:uppercase;position:relative}
+.section .section-title::after{content:"";display:block;width:96px;height:12px;background:repeating-linear-gradient(to bottom, #F26F0F 0 3px, transparent 3px 6px, #F26F0F 6px 9px, transparent 9px 12px);margin-top:4px;border-radius:2px;transform:skewX(-12deg);transform-origin:left center}
+.section .section-title.center{ text-align:left }
+.section .section-title.xl{ font-size:3rem; letter-spacing:1px }
 .section.dark{background:var(--navy-800);border-top:1px solid rgba(255,255,255,0.02)}
 .section.dark .section-title{color:var(--text)}
 .section.dark .card, .section.dark .price-card, .section.dark .contact-info{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);box-shadow:0 18px 50px rgba(2,10,20,0.55)}
@@ -282,6 +362,10 @@ body{margin:0;font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,"Helve
 .section.light .card p, .section.light .price-card ul li, .section.light .contact-info ul.meta li{color:rgba(4,42,74,0.7)}
 .section.light .nav-links a{color:var(--navy-700)}
 .section.light .btn.primary{color:#fff;background:linear-gradient(180deg,var(--navy-700),var(--navy-800));box-shadow:0 10px 30px rgba(4,42,74,0.12)}
+/* Brands */
+.brands-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap: 24px; align-items:center; justify-items:center; justify-content:center; margin-top: 28px }
+.brand-card{ background:#fff; border:1px solid rgba(4,42,74,0.08); border-radius: 14px; box-shadow: 0 8px 24px rgba(4,42,74,0.08); padding: 18px; display:flex; align-items:center; justify-content:center }
+.brand-card img{ max-width: 200px; max-height: 90px; width: auto; height: auto; object-fit: contain }
 
 
 /* NAVIGATION */
@@ -298,7 +382,7 @@ body{margin:0;font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,"Helve
 .hero{padding-top:120px;padding-bottom:80px; background: linear-gradient(180deg, var(--navy-900), var(--navy-800));}
 .hero .container, .hero-inner, .hero-text, .hero-card{ position: relative; z-index: 1 }
 .hero-inner{display:grid;grid-template-columns:1fr 380px;gap:48px;align-items:center}
-.hero-text h1{font-size:2.6rem;margin:0 0 14px;line-height:1.05;color:var(--text);font-weight:700}
+.hero-text h1{font-size:2.8rem;margin:0 0 14px;line-height:1.05;color:var(--text);font-family:'Anton','Inter',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;font-weight:400;letter-spacing:0.5px}
 .lead{color:var(--muted);margin:0 0 24px;font-size:1.05rem}
 .hero-ctas{display:flex;gap:14px}
 
@@ -326,14 +410,14 @@ a:focus,.btn:focus,input:focus,textarea:focus{outline:3px solid rgba(255,122,24,
 .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:22px;border-radius:12px;border:1px solid var(--glass);transition:transform .22s,box-shadow .22s}
 .card:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(2,10,20,0.5)}
 .card-icon{font-size:1.7rem;margin-bottom:10px}
-.card h3{margin:0 0 8px;color:var(--text)}
+.card h3{margin:0 0 8px;color:var(--text);font-family:'Anton','Inter',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;font-weight:400;letter-spacing:0.4px}
 .card p{color:var(--muted);font-size:.95rem}
 
 /* Pricing grid */
 .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:20px}
 .price-card{padding:20px;border-radius:12px;border:1px solid var(--glass);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))}
 .price-card.featured{border:1px solid rgba(255,122,24,0.9);box-shadow:0 30px 60px rgba(255,122,24,0.06);transform:translateY(-6px)}
-.price-card h4{margin:0 0 10px;font-size:1.1rem;color:var(--text)}
+.price-card h4{margin:0 0 10px;font-size:1.1rem;color:var(--text);font-family:'Anton','Inter',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;font-weight:400;letter-spacing:0.4px}
 .price{font-size:1.6rem;color:var(--orange);margin:8px 0}
 .price small{color:var(--muted);font-size:0.95rem;margin-right:8px}
 .price span{font-weight:800}
@@ -344,25 +428,18 @@ a:focus,.btn:focus,input:focus,textarea:focus{outline:3px solid rgba(255,122,24,
 .contact-form input,.contact-form textarea{width:100%;padding:12px;margin-bottom:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);font-size:1rem}
 .contact-form label{display:block}
 .contact-info{padding:20px;border-radius:12px;border:1px solid var(--glass);background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.006))}
-.contact-info h3{margin-top:0;margin-bottom:10px;font-size:1.15rem;color:var(--text)}
+.contact-info h3{margin-top:0;margin-bottom:10px;font-size:1.15rem;color:var(--text);font-family:'Anton','Inter',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;font-weight:400;letter-spacing:0.4px}
 .contact-info ul.meta{list-style:none;padding:0;margin-top:12px}
 .contact-info ul.meta li{margin-bottom:8px;color:var(--muted)}
-.social a{display:inline-block;margin-right:10px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.02);color:var(--text);text-decoration:none}
-
-/* Flash messages */
-.flash{padding:12px;border-radius:10px;margin-bottom:14px;font-weight:700}
-.flash.success{background:linear-gradient(90deg, rgba(40,199,111,0.12), rgba(40,199,111,0.06));color:var(--text);border:1px solid rgba(40,199,111,0.12)}
-.flash.error{background:linear-gradient(90deg, rgba(255,90,90,0.12), rgba(255,90,90,0.06));color:var(--text);border:1px solid rgba(255,90,90,0.12)}
-
-/* Footer */
+flash.error{background:linear-gradient(90deg, rgba(255,90,90,0.12), rgba(255,90,90,0.06));color:var(--text);border:1px solid rgba(255,90,90,0.12)}
 .site-footer{padding:28px 0;text-align:center;color:var(--muted);border-top:1px solid rgba(255,255,255,0.02);font-size:0.9rem}
 
 /* Responsive adjustments */
-@media (max-width:1000px){
+@media (max-width: 900px){
   .hero-inner{grid-template-columns:1fr;gap:30px}
   .contact-grid{grid-template-columns:1fr}
   .nav-links{display:none}
-}
+
 
 @media (max-width:480px){
   .hero-text h1{font-size:1.8rem}
