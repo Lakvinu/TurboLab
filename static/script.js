@@ -157,6 +157,53 @@ document.querySelectorAll('a[href^="#"]').forEach(link=>{
   nextBtn?.addEventListener('click', next);
   prevBtn?.addEventListener('click', prev);
 
+  // Touch swipe gestures (mobile): swipe left/right to navigate
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchDeltaX = 0;
+  let isSwiping = false;
+  const SWIPE_THRESHOLD = 40; // px horizontal movement to trigger
+  const VERTICAL_GUARD = 20;  // ignore if vertical movement dominates
+
+  function onTouchStart(e){
+    const t = e.touches?.[0];
+    if(!t) return;
+    touchStartX = t.clientX;
+    touchStartY = t.clientY;
+    touchDeltaX = 0;
+    isSwiping = true;
+    stopAutoplay();
+  }
+  function onTouchMove(e){
+    if(!isSwiping) return;
+    const t = e.touches?.[0];
+    if(!t) return;
+    const dx = t.clientX - touchStartX;
+    const dy = t.clientY - touchStartY;
+    // If vertical scroll is larger, cancel swipe to allow page scroll
+    if(Math.abs(dy) > Math.abs(dx) + VERTICAL_GUARD){ isSwiping = false; return; }
+    touchDeltaX = dx;
+    // Provide a small visual drag via transform (optional)
+    track.style.transition = 'none';
+    track.style.transform = `translateX(${(-index * stepWidth) + dx}px)`;
+  }
+  function onTouchEnd(){
+    if(!isSwiping){ update(true); startAutoplay(); return; }
+    if(touchDeltaX <= -SWIPE_THRESHOLD){
+      next();
+    } else if(touchDeltaX >= SWIPE_THRESHOLD){
+      prev();
+    } else {
+      update(true);
+    }
+    isSwiping = false;
+    startAutoplay();
+  }
+  // Attach listeners on the visible carousel area
+  carousel.addEventListener('touchstart', onTouchStart, { passive: true });
+  carousel.addEventListener('touchmove', onTouchMove, { passive: true });
+  carousel.addEventListener('touchend', onTouchEnd, { passive: true });
+
   // Autoplay with pause-on-hover and when lightbox is open/visibility hidden
   function startAutoplay(){ stopAutoplay(); autoplayTimer = setInterval(next, AUTOPLAY_MS); }
   function stopAutoplay(){ if(autoplayTimer){ clearInterval(autoplayTimer); autoplayTimer = null; } }
