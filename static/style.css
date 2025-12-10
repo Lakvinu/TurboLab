@@ -477,7 +477,7 @@ a:focus,.btn:focus,input:focus,textarea:focus{outline:3px solid rgba(255,122,24,
 .contact-info h3{margin-top:0;margin-bottom:10px;font-size:1.15rem;color:var(--text);font-family:Tahoma, Verdana, Segoe, 'Segoe UI', sans-serif;font-weight:600;letter-spacing:0.4px}
 .contact-info ul.meta{list-style:none;padding:0;margin-top:12px}
 .contact-info ul.meta li{margin-bottom:8px;color:var(--muted)}
-flash.error{background:linear-gradient(90deg, rgba(255,90,90,0.12), rgba(255,90,90,0.06));color:var(--text);border:1px solid rgba(255,90,90,0.12)}
+.flash.error{background:linear-gradient(90deg, rgba(255,90,90,0.12), rgba(255,90,90,0.06));color:var(--text);border:1px solid rgba(255,90,90,0.12)}
 .site-footer{padding:28px 0;text-align:center;color:var(--muted);border-top:1px solid rgba(255,255,255,0.02);font-size:0.9rem}
 
 /* Responsive adjustments */
@@ -485,6 +485,7 @@ flash.error{background:linear-gradient(90deg, rgba(255,90,90,0.12), rgba(255,90,
   .hero-inner{grid-template-columns:1fr;gap:30px}
   .contact-grid{grid-template-columns:1fr}
   .nav-links{display:none}
+}
 
 
 @media (max-width:480px){
