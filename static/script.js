@@ -1,3 +1,30 @@
+// Scroll reveal via IntersectionObserver
+(()=>{
+  const els = document.querySelectorAll('[data-reveal]');
+  if(!('IntersectionObserver' in window) || els.length===0){
+    // Fallback: make all visible
+    els.forEach(el=>el.classList.add('in'));
+    return;
+  }
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      const el = entry.target;
+      if(entry.isIntersecting){
+        el.classList.add('in');
+        io.unobserve(el);
+      }
+    })
+  },{root:null,threshold:0.15});
+  els.forEach((el, i)=>{
+    // add base reveal class based on optional variant
+    const variant = el.getAttribute('data-reveal');
+    if(variant && variant!=='true') el.classList.add('reveal', variant);
+    else el.classList.add('reveal');
+    // stagger animation start slightly for sequential appearance
+    el.style.transitionDelay = `${Math.min(i*0.12, 0.6)}s`;
+    io.observe(el);
+  })
+})();
 // Smooth anchor scrolling
 document.querySelectorAll('a[href^="#"]').forEach(link=>{
   link.addEventListener('click',e=>{

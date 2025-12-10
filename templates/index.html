@@ -28,7 +28,7 @@
 <!-- HERO SECTION -->
 <section id="hero" class="hero">
   <div class="container hero-inner">
-    <div class="hero-text">
+    <div class="hero-text" data-reveal>
       <h1>Premium Mobile Detailing</h1>
       <p class="lead">Showroom shine delivered to your doorstep. Luxury, precision, and care for every vehicle.</p>
       <div class="hero-ctas">
@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <div class="hero-card">
+    <div class="hero-card" data-reveal="fade-left">
       <div class="badge">Mobile • On-Demand • Premium</div>
       <div class="card-body">
         <h4>Turbo Detail</h4>
@@ -171,30 +171,29 @@
   <div class="container">
     <h2 class="section-title center xl">Our Trusted Brands</h2>
     <div class="brands-grid">
-      <div class="brand-card"><img src="https://res.cloudinary.com/dmaxvaojt/image/upload/v1765244225/P_S_Red_Logo_v1-Picsart-AiImageEnhancer-removebg-preview_nphqnt.png" alt="P&S"></div>
-      <div class="brand-card"><img src="https://res.cloudinary.com/dmaxvaojt/image/upload/v1765244456/TRC_Logo_620x_400x_f468d2a8-d03d-40ae-a5e2-8719e3b2575d-Picsart-AiImageEnhancer_xpukyk.png" alt="The Rag Company"></div>
-      <div class="brand-card"><img src="https://res.cloudinary.com/dmaxvaojt/image/upload/v1765244819/Ryobi_company_logo_svg-Picsart-AiImageEnhancer_omww8c.png" alt="Ryobi"></div>
+      <div class="brand-card" data-reveal><img src="https://res.cloudinary.com/dmaxvaojt/image/upload/v1765244225/P_S_Red_Logo_v1-Picsart-AiImageEnhancer-removebg-preview_nphqnt.png" alt="P&S"></div>
+      <div class="brand-card" data-reveal><img src="https://res.cloudinary.com/dmaxvaojt/image/upload/v1765244456/TRC_Logo_620x_400x_f468d2a8-d03d-40ae-a5e2-8719e3b2575d-Picsart-AiImageEnhancer_xpukyk.png" alt="The Rag Company"></div>
+      <div class="brand-card" data-reveal><img src="https://res.cloudinary.com/dmaxvaojt/image/upload/v1765244819/Ryobi_company_logo_svg-Picsart-AiImageEnhancer_omww8c.png" alt="Ryobi"></div>
     </div>
   </div>
   </section>
 
 <!-- WHY CHOOSE US -->
-<section id="why" class="why-section">
+<section id="why" class="why-section" data-reveal>
   <div class="why-inner">
     <div class="why-left" aria-hidden="true"></div>
     <div class="why-right">
       <div class="why-content container">
-        <div class="why-header">
+        <div class="why-header" data-reveal>
           <h2 class="why-title">WHY CHOOSE US</h2>
-          <div class="why-accents"><span class="accent-line"></span><span class="accent-line"></span></div>
           <p class="why-lead">We deliver professional, high-end detailing you can trust — premium products, meticulous processes, and a customer-first approach for consistent showroom results.</p>
         </div>
       </div>
     </div>
   </div>
   <!-- Centered overlay 6 features card (above section content) -->
-  <div class="features-overlay" aria-hidden="false">
-    <div class="features-card">
+  <div class="features-overlay" aria-hidden="false" data-reveal>
+    <div class="features-card" data-reveal>
       <div class="features-grid">
         <div class="feature-item">
           <h4>Premium Products</h4>
@@ -228,9 +227,9 @@
 
 
 <!-- CONTACT -->
-<section id="contact" class="section light">
+<section id="contact" class="section light" data-reveal>
   <div class="container">
-    <h2 class="section-title">Contact Us</h2>
+    <h2 class="section-title xl">Contact Us</h2>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
@@ -241,14 +240,14 @@
     {% endwith %}
 
     <div class="contact-grid">
-      <form class="contact-form" method="POST" novalidate>
+      <form class="contact-form" method="POST" novalidate data-reveal>
         <label><input name="name" placeholder="Your Name" required></label>
         <label><input name="email" placeholder="Email" type="email" required></label>
         <label><textarea name="message" rows="5" placeholder="Your Message" required></textarea></label>
         <button class="btn primary" type="submit">Send Message</button>
       </form>
 
-      <aside class="contact-info">
+      <aside class="contact-info" data-reveal="fade-right">
         <h3>We Come to You</h3>
         <p>Serving greater Melbourne — fully mobile and appointment-based for your convenience.</p>
         <ul class="meta">
