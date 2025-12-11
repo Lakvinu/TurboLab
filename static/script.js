@@ -285,3 +285,43 @@ document.querySelectorAll('a[href^="#"]').forEach(link=>{
   window.addEventListener('resize', init);
   init();
 })();
+
+// Before & After comparison control
+(function(){
+  const compare = document.querySelector('.compare');
+  if(!compare) return;
+  const afterImg = compare.querySelector('.compare-img.after');
+  const range = compare.querySelector('.compare-range');
+  const handle = compare.querySelector('.compare-handle');
+  function update(){
+    const v = parseInt(range.value || '50', 10);
+    const pct = Math.max(0, Math.min(100, v));
+    // Reveal after image to percentage
+    afterImg.style.clipPath = `inset(0 0 0 ${100-pct}%)`;
+    handle.style.left = `${pct}%`;
+  }
+  range.addEventListener('input', update);
+  range.addEventListener('change', update);
+  window.addEventListener('resize', update);
+  // Dragging support on handle and entire compare area
+  let dragging = false;
+  function setFromClientX(clientX){
+    const rect = compare.getBoundingClientRect();
+    const x = Math.max(rect.left, Math.min(rect.right, clientX));
+    const pct = Math.round(((x - rect.left) / rect.width) * 100);
+    range.value = String(pct);
+    update();
+  }
+  function onPointerDown(e){ dragging = true; setFromClientX(e.clientX ?? (e.touches?.[0]?.clientX || 0)); e.preventDefault(); }
+  function onPointerMove(e){ if(!dragging) return; setFromClientX(e.clientX ?? (e.touches?.[0]?.clientX || 0)); }
+  function onPointerUp(){ dragging = false; }
+  // Mouse events
+  compare.addEventListener('mousedown', onPointerDown);
+  window.addEventListener('mousemove', onPointerMove);
+  window.addEventListener('mouseup', onPointerUp);
+  // Touch events
+  compare.addEventListener('touchstart', onPointerDown, { passive: false });
+  window.addEventListener('touchmove', onPointerMove, { passive: true });
+  window.addEventListener('touchend', onPointerUp);
+  update();
+})();
