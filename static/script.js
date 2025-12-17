@@ -297,7 +297,8 @@ document.querySelectorAll('a[href^="#"]').forEach(link=>{
     const v = parseInt(range.value || '50', 10);
     const pct = Math.max(0, Math.min(100, v));
     // Reveal after image to percentage
-    afterImg.style.clipPath = `inset(0 0 0 ${100-pct}%)`;
+    // Inverted behavior: moving right reveals BEFORE (left) image more
+    afterImg.style.clipPath = `inset(0 0 0 ${pct}%)`;
     handle.style.left = `${pct}%`;
   }
   range.addEventListener('input', update);
@@ -324,4 +325,57 @@ document.querySelectorAll('a[href^="#"]').forEach(link=>{
   window.addEventListener('touchmove', onPointerMove, { passive: true });
   window.addEventListener('touchend', onPointerUp);
   update();
+})();
+
+// Contact form AJAX submit (no page refresh)
+(function(){
+  const form = document.querySelector('.contact-form');
+  if(!form) return;
+  const btn = form.querySelector('button[type="submit"]');
+
+  function showAlert(kind, text){
+    let box = form.querySelector('.form-alert');
+    if(!box){
+      box = document.createElement('div');
+      box.className = 'form-alert flash';
+      form.insertBefore(box, btn);
+    }
+    box.className = `form-alert flash ${kind}`;
+    box.textContent = text;
+  }
+
+  async function submitForm(e){
+    e.preventDefault();
+    const fd = new FormData(form);
+    const name = (fd.get('name')||'').toString().trim();
+    const email = (fd.get('email')||'').toString().trim();
+    const message = (fd.get('message')||'').toString().trim();
+    if(!name || !email || !message){
+      showAlert('error', 'Please fill in all fields.');
+      return;
+    }
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    try{
+      const resp = await fetch('/api/contact',{
+        method:'POST',
+        headers:{ 'Content-Type':'application/json' },
+        body: JSON.stringify({ name, email, message })
+      });
+      const data = await resp.json().catch(()=>({}));
+      if(!resp.ok || data?.ok === false){
+        const msg = data?.error || 'Sorry, we could not send your message.';
+        showAlert('error', msg);
+      } else {
+        showAlert('success', data?.message || 'Thanks! Your message has been received.');
+        form.reset();
+      }
+    } catch(err){
+      showAlert('error', 'Network error. Please try again later.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Send Message';
+    }
+  }
+  form.addEventListener('submit', submitForm);
 })();
