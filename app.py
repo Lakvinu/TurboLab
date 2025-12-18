@@ -4,7 +4,6 @@ import ssl
 import smtplib
 import logging
 from email.message import EmailMessage
-from threading import Thread
 
 app = Flask(__name__)
 app.secret_key = "replace_with_a_super_secret_key"
@@ -27,6 +26,7 @@ def send_contact_email(name: str, email: str, message: str) -> None:
     port = int(os.environ.get("EMAIL_PORT", "465"))
     user = os.environ.get("EMAIL_USER")
     password = os.environ.get("EMAIL_PASS")
+    timeout = float(os.environ.get("EMAIL_TIMEOUT", "10"))
  
 
     if not user or not password:
@@ -55,18 +55,14 @@ def send_contact_email(name: str, email: str, message: str) -> None:
     # Send via SSL SMTP
     context = ssl.create_default_context()
     try:
-        with smtplib.SMTP_SSL(host, port, context=context) as server:
+        with smtplib.SMTP_SSL(host, port, context=context, timeout=timeout) as server:
             server.login(user, password)
             server.send_message(msg, from_addr=user, to_addrs=[to_addr])
     except Exception as e:
         print("SMTP ERROR >>>", repr(e))
         raise
 
-def _send_email_async(name: str, email: str, message: str) -> None:
-    try:
-        send_contact_email(name, email, message)
-    except Exception:
-        logging.exception("Background email send failed")
+ 
 
 @app.route("/api/contact", methods=["POST"]) 
 def api_contact():
@@ -82,11 +78,18 @@ def api_contact():
     if not name or not email or not message:
         return jsonify({"ok": False, "error": "Please fill in all fields."}), 400
 
-    # Kick off background send to keep response fast
-    t = Thread(target=_send_email_async, args=(name, email, message), daemon=True)
-    t.start()
-    # 202 Accepted indicates accepted for processing
-    return jsonify({"ok": True, "message": "Thanks! Your message has been received."}), 202
+    # Send synchronously so response reflects actual outcome
+    try:
+        send_contact_email(name, email, message)
+    except Exception:
+        return jsonify({
+            "ok": False,
+            "error": "We couldn't send your message right now. Please try again later."
+        }), 500
+    return jsonify({
+        "ok": True,
+        "message": "Thanks! Your message has been received."
+    }), 200
 
 @app.route("/", methods=["GET", "POST"])
 def home():

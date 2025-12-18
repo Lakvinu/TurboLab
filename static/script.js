@@ -367,6 +367,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link=>{
         const msg = data?.error || 'Sorry, we could not send your message.';
         showAlert('error', msg);
       } else {
+        // Synchronous success: show success message and reset form
         showAlert('success', data?.message || 'Thanks! Your message has been received.');
         form.reset();
       }
