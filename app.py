@@ -59,7 +59,7 @@ def send_contact_email(name: str, email: str, message: str) -> None:
             server.login(user, password)
             server.send_message(msg, from_addr=user, to_addrs=[to_addr])
     except Exception as e:
-        print("SMTP ERROR >>>", repr(e))
+        logging.exception("SMTP ERROR")
         raise
 
  
