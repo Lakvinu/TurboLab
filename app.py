@@ -1,9 +1,7 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 import os
-import ssl
-import smtplib
 import logging
-from email.message import EmailMessage
+import requests
 
 app = Flask(__name__)
 app.secret_key = "replace_with_a_super_secret_key"
@@ -12,54 +10,74 @@ app.secret_key = "replace_with_a_super_secret_key"
 logging.basicConfig(level=logging.INFO)
 
 def send_contact_email(name: str, email: str, message: str) -> None:
-    """Send a contact form email via GoDaddy SMTP.
+    """Send a contact form email via MailerSend HTTP API.
 
-    Requirements:
-    - SMTP host/port/user/pass from environment variables
-    - From header: "TurboLab Support <support@turbolab.com.au>"
-    - Envelope sender: EMAIL_USER (for deliverability)
-    - To: hello@turbolab.com.au
-    - Reply-To: customer's email
+    Env config:
+    - MAILERSEND_API_TOKEN (required)
+    - MAILERSEND_SENDER_EMAIL (default: support@turbolab.com.au)
+    - MAILERSEND_SENDER_NAME (default: TurboLab Support)
+    - CONTACT_TO_EMAIL (default: hello@turbolab.com.au)
+    - EMAIL_TIMEOUT (default: 10s)
     """
 
-    host = os.environ.get("EMAIL_HOST", "smtpout.secureserver.net")
-    port = int(os.environ.get("EMAIL_PORT", "465"))
-    user = os.environ.get("EMAIL_USER")
-    password = os.environ.get("EMAIL_PASS")
-    timeout = float(os.environ.get("EMAIL_TIMEOUT", "10"))
- 
+    api_token = os.environ.get("API_TOKEN")
+    if not api_token:
+        logging.error("Missing MAILERSEND_API_TOKEN env var.")
+        raise RuntimeError("MailerSend API token is not configured.")
+    
 
-    if not user or not password:
-        logging.error("Email credentials are missing (EMAIL_USER/EMAIL_PASS).")
-        raise RuntimeError("Email credentials are not configured.")
 
-    to_addr = "hello@turbolab.com.au"
 
-    # Build email
-    msg = EmailMessage()
-    msg["Subject"] = "New Contact Form Submission"
-    msg["From"] = "TurboLab Support <support@turbolab.com.au>"
-    msg["To"] = to_addr
-    if email:
-        msg["Reply-To"] = email
+    sender_email = "support@turbolab.com.au"
+    sender_name = "TurboLab Support"
+    to_email = "hello@turbolab.com.au"
+    timeout = float("10")
 
-    body = (
+
+
+
+
+    text_body = (
         "New contact form submission:\n\n"
         f"Name: {name}\n"
         f"Email: {email}\n\n"
         "Message:\n\n"
         f"{message}\n"
     )
-    msg.set_content(body)
 
-    # Send via SSL SMTP
-    context = ssl.create_default_context()
+    html_body = (
+        "<p><strong>New contact form submission</strong></p>"
+        f"<p><strong>Name:</strong> {name}<br>"
+        f"<strong>Email:</strong> {email}</p>"
+        f"<p>{message.replace('\n', '<br>')}</p>"
+    )
+
+    payload = {
+        "from": {"email": sender_email, "name": sender_name},
+        "to": [{"email": to_email, "name": "TurboLab"}],
+        "reply_to": {"email": email, "name": name or "Website Visitor"},
+        "subject": "New Contact Form Submission",
+        "text": text_body,
+        "html": html_body,
+    }
+
+    headers = {
+        "Authorization": f"Bearer {api_token}",
+        "Content-Type": "application/json",
+    }
+
     try:
-        with smtplib.SMTP_SSL(host, port, context=context, timeout=timeout) as server:
-            server.login(user, password)
-            server.send_message(msg, from_addr=user, to_addrs=[to_addr])
-    except Exception as e:
-        logging.exception("SMTP ERROR")
+        resp = requests.post(
+            "https://api.mailersend.com/v1/email",
+            headers=headers,
+            json=payload,
+            timeout=timeout,
+        )
+        resp.raise_for_status()
+        
+    except requests.RequestException as e:
+        resp_text = getattr(e.response, "text", "") if hasattr(e, "response") else ""
+        logging.exception("MailerSend API error. Status/Text: %s %s", getattr(e, "response", None), resp_text)
         raise
 
  
